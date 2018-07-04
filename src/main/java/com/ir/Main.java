@@ -23,7 +23,7 @@ public class Main {
             List<MyDocument> testDocuments = MyDocument.readDocuments(config.testFile);
 
             for (MyDocument document : testDocuments) {
-                document.assignedCategory = classifier.classify(testDocuments.get(0));
+                document.assignedCategory = classifier.classify(document);
             }
 
             StringBuilder resultStr = new StringBuilder();
@@ -39,10 +39,10 @@ public class Main {
 
             Files.write(Paths.get(config.outputFile), resultStr.toString().getBytes());
 
-            ResultAnalyzer resultAnalyzer = new ResultAnalyzer();
-            double[] results = resultAnalyzer.analzeResults(testDocuments);
-
-            System.out.println("macro: " + results[0] + " micro: " + results[1]);
+//            ResultAnalyzer resultAnalyzer = new ResultAnalyzer();
+//            double[] results = resultAnalyzer.analzeResults(testDocuments);
+//
+//            System.out.println("macro: " + results[0] + " micro: " + results[1]);
 
         }
         catch (Exception e) {
