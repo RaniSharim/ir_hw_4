@@ -34,7 +34,7 @@ public class ResultAnalyzer {
         return categories;
     }
 
-    public double[] analzeResults(List<MyDocument> documents) {
+    public double[] analyzeResults(List<MyDocument> documents) {
         Map<String, Category> categories = initCategories();
 
         for (MyDocument document : documents) {

@@ -34,7 +34,7 @@ class MyDocument {
             documents.add(currentDocument);
 
             // unmark this if you want to limit number of documents, for debugging purpuses
-//            if (i>10000) {
+//            if (i>1000) {
 //                return documents;
 //            }
         }

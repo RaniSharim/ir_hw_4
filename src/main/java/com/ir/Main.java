@@ -3,7 +3,6 @@ package main.java.com.ir;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,31 +17,39 @@ public class Main {
 
             KnnClassifier classifier = new KnnClassifier();
             classifier.addTrainDocuments(MyDocument.readDocuments(config.trainFile));
-            classifier.train(config.k);
 
             List<MyDocument> testDocuments = MyDocument.readDocuments(config.testFile);
 
+            classifier.train(config.k);
             for (MyDocument document : testDocuments) {
                 document.assignedCategory = classifier.classify(document);
             }
 
+            // This calculates Micro/Macro F1 score for the classification
+//            ResultAnalyzer resultAnalyzer = new ResultAnalyzer();
+//            double[] results = resultAnalyzer.analyzeResults(testDocuments);
+//
+//            System.out.println("K: " + k + " macro: " + results[0] + " micro: " + results[1]);
+
+
+
             StringBuilder resultStr = new StringBuilder();
+            // Sort the results
             testDocuments.sort((a,b) -> a.docId > b.docId?1:-1);
+            // Create the output
             for (MyDocument document : testDocuments) {
                 resultStr.append(document.docId);
                 resultStr.append(",");
-                resultStr.append(document.realCategory);
-                resultStr.append(",");
                 resultStr.append(document.assignedCategory);
+                resultStr.append(",");
+                resultStr.append(document.realCategory);
                 resultStr.append("\n");
             }
 
+            // Write it to the output file
             Files.write(Paths.get(config.outputFile), resultStr.toString().getBytes());
 
-//            ResultAnalyzer resultAnalyzer = new ResultAnalyzer();
-//            double[] results = resultAnalyzer.analzeResults(testDocuments);
-//
-//            System.out.println("macro: " + results[0] + " micro: " + results[1]);
+
 
         }
         catch (Exception e) {
